@@ -1,0 +1,6 @@
+ebin
+.eunit
+doc
+deps
+*~
+*.beam
