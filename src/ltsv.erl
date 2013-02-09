@@ -17,13 +17,13 @@
 parse_line(Line) ->
     F = fun(N) ->
                 case binary:split(N, <<$:>>) of
-                    [Label | Field] ->
-                        {Label, hd(Field)};
+                    [Label, Field] ->
+                        {Label, Field};
                     _ ->
                         error(invalid_syntax)
                 end
         end,
-	lists:map(F, binary:split(rstrip(Line), <<$\t>>, [global])).
+    lists:map(F, binary:split(rstrip(Line), <<$\t>>, [global])).
 
 -spec parse_file(string()) -> [[{binary(), binary()}]].
 %% @doc parse LTSV formated file.
