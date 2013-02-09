@@ -73,5 +73,22 @@ rstrip(Binary) when is_binary(Binary) ->
             Binary
     end.
 
+-spec join(binary(), binary()) -> binary().
 join([First|Rest], JoinWith) ->
     list_to_binary( [First|[ <<JoinWith/binary, X/binary>> || X <- Rest]] ).
+
+
+-ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+rstrip_test() ->
+	%% strip
+	?assertEqual(rstrip(<<"ab\n">>), <<"ab">>),
+	%% no newline
+	?assertEqual(rstrip(<<"ab">>), <<"ab">>),
+	%% keep newline in the middle
+	?assertEqual(rstrip(<<"ab\ncd">>), <<"ab\ncd">>).
+
+join_test() ->
+	?assertEqual(join([<<"a">>, <<"b">>], <<$:>>), <<"a:b">>).
+
+-endif.
