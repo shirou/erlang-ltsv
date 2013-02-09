@@ -12,7 +12,7 @@
 -export([parse_line/1, parse_file/1]).
 
 
--spec parse_line(sring()) -> [{term(), term()}].
+-spec parse_line(string()) -> [{term(), term()}].
 %% @doc parse a LTSV formated line.
 parse_line(Line) ->
     F = fun(N) ->
@@ -25,7 +25,7 @@ parse_line(Line) ->
         end,
 	lists:map(F, binary:split(rstrip(Line), <<$\t>>, [global])).
 
--spec parse_file(sring()) -> [[{term(), term()}]].
+-spec parse_file(string()) -> [[{term(), term()}]].
 %% @doc parse LTSV formated file.
 parse_file(File) ->
 	case file:open(File, [read, binary]) of
@@ -65,15 +65,3 @@ rstrip(Binary) when is_binary(Binary) ->
         _ ->
             Binary
     end.
-
-%% -------------------------------------------------------------------
-%% UNIT TESTS
-%% -------------------------------------------------------------------
-
--ifdef(TEST).
--include_lib("eunit/include/eunit.hrl").
-
-parse_line_() ->
-	?assert(parse_line("a:b") =:= [{<<"a">>,<<"b">>}]).
-
--endif.
