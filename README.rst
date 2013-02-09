@@ -1,7 +1,7 @@
 erlang-ltsv
 ===========
 
-https://api.travis-ci.org/shirou/erlang-ltsv.png
+.. image:: https://api.travis-ci.org/shirou/erlang-ltsv.png
 
 erlang-ltsv is a Labeled Tab-separated Values (LTSV) format parser for
 erlang.
