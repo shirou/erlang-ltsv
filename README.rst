@@ -9,15 +9,15 @@ erlang.
 API
 -----------
 
-- parse_line(string()) -> [{term(), term()}].
+- parse_line(binary()) -> [{binary(), binary()}].
 
   parse one line.
 
-- parse_file(string()) -> [[{term(), term()}]].
+- parse_file(string()) -> [[{binary(), binary()}]].
 
   parse specified file.
 
-- write([{term(), term()}]) -> string().
+- write([{binary(), binary()}]) -> string().
 
   convert a list of {Label, Field} to a string.
 
