@@ -12,7 +12,7 @@
 -export([parse_line/1, parse_file/1, write/1]).
 
 
--spec parse_line(string()) -> [{term(), term()}].
+-spec parse_line(binary()) -> [{binary(), binary()}].
 %% @doc parse a LTSV formated line.
 parse_line(Line) ->
     F = fun(N) ->
@@ -25,10 +25,10 @@ parse_line(Line) ->
         end,
 	lists:map(F, binary:split(rstrip(Line), <<$\t>>, [global])).
 
--spec parse_file(string()) -> [[{term(), term()}]].
+-spec parse_file(string()) -> [[{binary(), binary()}]].
 %% @doc parse LTSV formated file.
 parse_file(File) ->
-	case file:open(File, [read, binary]) of
+	case file:open(File, [read, binary, raw]) of
 		{ok, Device} ->
 			parse_file(Device, []);
 		{error, Reason} ->
@@ -62,10 +62,10 @@ write(Data) ->
 rstrip(<<>>) ->
     <<>>;
 rstrip(String) when is_list(String) ->
-	rstrip(list_to_binary(String));
+    rstrip(list_to_binary(String));
 rstrip(Binary) when is_binary(Binary) ->
-	Size = byte_size(Binary) - 1,
-	case Binary of
+    Size = byte_size(Binary) - 1,
+    case Binary of
         <<Rest:Size/binary, C>> when C =:= $\s orelse C =:= $\t orelse
                                      C =:= $\r orelse C =:= $\n ->
             rstrip(Rest);
@@ -74,4 +74,4 @@ rstrip(Binary) when is_binary(Binary) ->
     end.
 
 join([First|Rest], JoinWith) ->
-	list_to_binary( [First|[ <<JoinWith/binary, X/binary>> || X <- Rest]] ).
+    list_to_binary( [First|[ <<JoinWith/binary, X/binary>> || X <- Rest]] ).
