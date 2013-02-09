@@ -1,4 +1,5 @@
--module(ltsv_test).
+-module(ltsv_tests).
+-import(ltsv, [parse_line/1, parse_file/1, write/1]).
 
 -include_lib("eunit/include/eunit.hrl").
 
