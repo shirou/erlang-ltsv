@@ -9,7 +9,7 @@
 
 -module(ltsv).
 
--export([parse_line/1, parse_file/1]).
+-export([parse_line/1, parse_file/1, write/1]).
 
 
 -spec parse_line(string()) -> [{term(), term()}].
@@ -45,6 +45,13 @@ parse_file(Device, Acc) ->
 			error(Reason)
     end.
 
+-spec write([{term(), term()}]) -> string().
+%% @doc convert data to LTSV format string.
+write(Data) ->
+	F = fun({Label, Field}) ->
+				<<Label/binary, $:, Field/binary>>
+		end,
+	binary:bin_to_list(join(lists:map(F, Data), <<$\t>>)).
 
 
 %% -------------------------------------------------------------------
@@ -65,3 +72,6 @@ rstrip(Binary) when is_binary(Binary) ->
         _ ->
             Binary
     end.
+
+join([First|Rest], JoinWith) ->
+	list_to_binary( [First|[ <<JoinWith/binary, X/binary>> || X <- Rest]] ).

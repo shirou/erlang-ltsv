@@ -17,6 +17,10 @@ API
 
   parse specified file.
 
+- write([{term(), term()}]) -> string().
+
+  convert a list of {Label, Field} to a string.
+
 Example
 -------------
 
@@ -32,6 +36,8 @@ Example
   > ltsv:parse_file("some_file.tsv").
     [{<<"somelabel">>,<<"somevalue">>}]
 
+  > ltsv:write([{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]).
+    "1:a\t2:bb\t3:d:e"
 
 License
 ---------
