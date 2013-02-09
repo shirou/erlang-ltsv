@@ -21,6 +21,34 @@ API
 
   convert a list of {Label, Field} to a string.
 
+Note
+-----------
+
+Other languages LTSV parser parse LTSV to a dictionary. However,
+erlang dictionaly is not so fast, this implementation parse to a
+list of tuple.
+
+For example,
+
+::
+
+  "L1:F1\tL2:F2" -> [{<<"L1">>,<<"F1">>}, {<<"L2">>,<<"F2">>}]
+
+Since that, if multiple same label are in the source, all of these are
+stored in the returned list.
+
+::
+
+  "L1:F1\tL1:F2" -> [{<<"L1">>,<<"F1">>}, {<<"L1">>,<<"F2">>}]
+
+Other implementation may return like this.
+
+::
+
+  (python implementation)
+  "L1:F1\tL1:F2" -> {"L1" : "F2"}
+
+
 Example
 -------------
 
