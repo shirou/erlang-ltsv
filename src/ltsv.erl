@@ -16,15 +16,11 @@
 
 -spec parse(binary() | string()) -> [[{binary(), binary()}]].
 %% @doc parse LTSV formated lines.
-parse(Source) ->
-	S = case is_list(Source) of
-			true ->
-				list_to_binary(Source);
-			_ ->
-				Source
-		end,
+parse(Source) when is_list(Source) ->
+	parse(list_to_binary(Source));
+parse(Source) when is_binary(Source) ->
 	lists:map(fun(N) -> parse_line(N) end,
-			  binary:split(S, <<$\n>>, [global])).
+			  binary:split(Source, <<$\n>>, [global])).
 
 -spec parse_line(binary()) -> [{binary(), binary()}].
 %% @doc parse a LTSV formated line.
