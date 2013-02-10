@@ -9,17 +9,13 @@ erlang.
 API
 -----------
 
-- parse_line(binary() | string()) -> [[{binary(), binary()}]].
+- parse(binary() | string()) -> [[{binary(), binary()}]].
 
   parse LTSV format lines.
 
 - parse_line(binary()) -> [{binary(), binary()}].
 
   parse one line.
-
-- parse(binary()) -> [[{binary(), binary()}]].
-
-  parse multiple lines.
 
 - parse_file(string()) -> [[{binary(), binary()}]].
 
