@@ -35,7 +35,14 @@ parse_file_test() ->
 	?assertEqual(lists:nth(4, T),
 				[{<<"21">>,<<"double">>},{<<"22">>,<<"bb">>},{<<"21">>,<<"double2">>}]).
 
-write_test() ->
-	Src = [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
-	Expected = "1:a\t2:bb\t3:d:e",
-	?assertEqual(ltsv:write(Src), Expected).
+to_binary_test() ->
+	Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
+		   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
+	Expected = <<"1:a\t2:bb\t3:d:e1:a\t2:bb\t3:d:e">>,
+	?assertEqual(ltsv:to_binary(Src), Expected).
+
+to_list_test() ->
+	Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
+		   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
+	Expected = "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e",
+	?assertEqual(ltsv:to_list(Src), Expected).

@@ -9,7 +9,8 @@
 
 -module(ltsv).
 
--export([parse/1, parse_line/1, parse_file/1, write/1]).
+-export([parse/1, parse_line/1, parse_file/1,
+		to_binary/1, to_list/1]).
 
 
 -spec parse(binary() | string()) -> [[{binary(), binary()}]].
@@ -57,13 +58,25 @@ parse_file(Device, Acc) ->
 			error(Reason)
     end.
 
--spec write([{term(), term()}]) -> string().
-%% @doc convert data to LTSV format string.
-write(Data) ->
+-spec to_binary([[{binary(), binary()}]]) -> binary().
+%% @doc convert lists to LTSV format binary.
+to_binary(Data) ->
+	D = lists:map(fun(N) -> to_binary_one(N) end, Data),
+	binary:list_to_bin(D).
+
+-spec to_list([{binary(), binary()}]) -> list().
+%% @doc convert lists to LTSV format list.
+to_list(Data) ->
+	D = lists:map(fun(N) -> to_binary_one(N) end, Data),
+	binary:bin_to_list(join(D, <<$\n>>)).
+
+-spec to_binary_one([{binary(), binary()}]) -> binary().
+%% @doc convert one list to LTSV format binary.
+to_binary_one(Data) ->
 	F = fun({Label, Field}) ->
 				<<Label/binary, $:, Field/binary>>
 		end,
-	binary:bin_to_list(join(lists:map(F, Data), <<$\t>>)).
+	join(lists:map(F, Data), <<$\t>>).
 
 
 %% -------------------------------------------------------------------

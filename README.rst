@@ -21,9 +21,14 @@ API
 
   parse specified file.
 
-- write([{binary(), binary()}]) -> string().
+- to_binary([[{binary(), binary()}]]) -> binary().
 
-  convert a list of {Label, Field} to a string.
+  convert a list of {Label, Field} to a binary.
+
+- to_list([[{binary(), binary()}]) -> list().
+
+  convert a list of {Label, Field} to a list.
+
 
 Note
 -----------
@@ -76,11 +81,20 @@ Example
      {<<"time">>,<<"[10/Oct/2000:13:55:36-0700]">>},
      {<<"req">>,<<"GET">>}]
 
+  %% parse from file
   > ltsv:parse_file("some_file.tsv").
     [{<<"somelabel">>,<<"somevalue">>}]
 
-  > ltsv:write([{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]).
-    "1:a\t2:bb\t3:d:e"
+  %% convert a LTSV format data to binary
+  > ltsv:to_binary([[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
+                    [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]]).
+    <<"1:a\t2:bb\t3:d:e1:a\t2:bb\t3:d:e">>
+
+  %% convert a LTSV format data to list
+  > ltsv:to_list([[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
+                  [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]]).
+    "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"
+
 
 License
 ---------
