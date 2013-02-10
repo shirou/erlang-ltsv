@@ -9,9 +9,17 @@ erlang.
 API
 -----------
 
+- parse_line(binary() | string()) -> [[{binary(), binary()}]].
+
+  parse LTSV format lines.
+
 - parse_line(binary()) -> [{binary(), binary()}].
 
   parse one line.
+
+- parse(binary()) -> [[{binary(), binary()}]].
+
+  parse multiple lines.
 
 - parse_file(string()) -> [[{binary(), binary()}]].
 
@@ -54,6 +62,17 @@ Example
 
 ::
 
+  %% parse LTSV format binary.
+  > ltsv:parse("a:b\t1:2\na:b\t1:2").
+    [[{<<"a">>,<<"b">>},{<<"1">>,<<"2">>}],
+    [{<<"a">>,<<"b">>},{<<"1">>,<<"2">>}]]
+
+  %% parse multiple LTSV format lines.
+  > ltsv:parse(<<"a:b\t1:2\na:b\t1:2">>).
+    [[{<<"a">>,<<"b">>},{<<"1">>,<<"2">>}],
+    [{<<"a">>,<<"b">>},{<<"1">>,<<"2">>}]]
+
+  %% parse one line.
   > ltsv:parse_line("host:127.0.0.1\tident:-\tuser:frank\ttime:[10/Oct/2000:13:55:36-0700]\treq:GET").
     [{<<"host">>,<<"127.0.0.1">>},
      {<<"ident">>,<<"-">>},

@@ -9,8 +9,20 @@
 
 -module(ltsv).
 
--export([parse_line/1, parse_file/1, write/1]).
+-export([parse/1, parse_line/1, parse_file/1, write/1]).
 
+
+-spec parse(binary() | string()) -> [[{binary(), binary()}]].
+%% @doc parse LTSV formated lines.
+parse(Source) ->
+	S = case is_list(Source) of
+			true ->
+				list_to_binary(Source);
+			_ ->
+				Source
+		end,
+	lists:map(fun(N) -> parse_line(N) end,
+			  binary:split(S, <<$\n>>, [global])).
 
 -spec parse_line(binary()) -> [{binary(), binary()}].
 %% @doc parse a LTSV formated line.

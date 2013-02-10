@@ -3,6 +3,17 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
+parse_test() ->
+	?assertEqual(ltsv:parse("a:b"), [[{<<"a">>,<<"b">>}]]),
+	?assertEqual(ltsv:parse("a:b\t1:2"), [[{<<"a">>,<<"b">>}, {<<"1">>,<<"2">>}]]),
+	?assertEqual(ltsv:parse("a:b\t1:2\na:b\t1:2"),
+				 [[{<<"a">>,<<"b">>}, {<<"1">>,<<"2">>}],
+				  [{<<"a">>,<<"b">>}, {<<"1">>,<<"2">>}]]),
+	%% check binary
+	?assertEqual(ltsv:parse(<<"a:b\t1:2\na:b\t1:2">>),
+				 [[{<<"a">>,<<"b">>}, {<<"1">>,<<"2">>}],
+				  [{<<"a">>,<<"b">>}, {<<"1">>,<<"2">>}]]).
+
 parse_line_test() ->
 	%% one tuple
 	?assertEqual(ltsv:parse_line("a:b"), [{<<"a">>,<<"b">>}]),
