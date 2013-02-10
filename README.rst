@@ -29,7 +29,7 @@ API
 
   convert a list of {Label, Field} to a list.
 
-- get(binary() | list(), binary()) -> list().
+- get_fields(binary() | list(), binary()) -> list().
 
   returns a list of specified key.
 
@@ -101,7 +101,7 @@ Example
 
   ----------------------------------------------------
   %% get a list of specified key
-  > ltsv:get(ltsv:parse("1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"), <<"2">>).
+  > ltsv:get_fields(ltsv:parse("1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"), <<"2">>).
     [<<"bb">>,<<"bb">>]
 
 

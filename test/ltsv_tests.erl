@@ -48,7 +48,7 @@ to_list_test() ->
 	?assertEqual(ltsv:to_list(Src), Expected).
 
 
-get_test() ->
+get_fields_test() ->
 	Src = "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e",
 	S = ltsv:parse(Src),
-	?assertEqual(ltsv:get(S, <<"2">>), [<<"bb">>, <<"bb">>]).
+	?assertEqual(ltsv:get_fields(S, <<"2">>), [<<"bb">>, <<"bb">>]).
