@@ -2,7 +2,7 @@
 
 REBAR_CONFIG = rebar.config
 
-APP_NAME = erltsv
+APP_NAME = erlang-ltsv
 
 all: clean deps test
 
