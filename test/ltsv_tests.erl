@@ -46,3 +46,9 @@ to_list_test() ->
 		   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
 	Expected = "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e",
 	?assertEqual(ltsv:to_list(Src), Expected).
+
+
+get_test() ->
+	Src = "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e",
+	S = ltsv:parse(Src),
+	?assertEqual(ltsv:get(S, <<"2">>), [<<"bb">>, <<"bb">>]).

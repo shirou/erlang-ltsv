@@ -29,6 +29,9 @@ API
 
   convert a list of {Label, Field} to a list.
 
+- get(binary() | list(), binary()) -> list().
+
+  returns a list of specified key.
 
 Note
 -----------
@@ -85,6 +88,7 @@ Example
   > ltsv:parse_file("some_file.tsv").
     [{<<"somelabel">>,<<"somevalue">>}]
 
+  ----------------------------------------------------
   %% convert a LTSV format data to binary
   > ltsv:to_binary([[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
                     [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]]).
@@ -94,6 +98,11 @@ Example
   > ltsv:to_list([[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
                   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]]).
     "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"
+
+  ----------------------------------------------------
+  %% get a list of specified key
+  > ltsv:get(ltsv:parse("1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"), <<"2">>).
+    [<<"bb">>,<<"bb">>]
 
 
 License

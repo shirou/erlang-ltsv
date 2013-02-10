@@ -10,7 +10,8 @@
 -module(ltsv).
 
 -export([parse/1, parse_line/1, parse_file/1,
-		to_binary/1, to_list/1]).
+		 to_binary/1, to_list/1,
+		 get/2]).
 
 
 -spec parse(binary() | string()) -> [[{binary(), binary()}]].
@@ -77,6 +78,18 @@ to_binary_one(Data) ->
 				<<Label/binary, $:, Field/binary>>
 		end,
 	join(lists:map(F, Data), <<$\t>>).
+
+
+-spec get(binary() | list(), binary()) -> list().
+%% @doc get a list of value which is specified by the key
+get(Data, Key) when is_list(Data) ->
+	F = fun(N) ->
+				{_, Field} = lists:keyfind(Key, 1, N),
+				Field
+		end,
+	lists:map(F, Data);
+get(Data, Key) when is_binary(Data) ->
+	get(binary:bin_to_list(Data), Key).
 
 
 %% -------------------------------------------------------------------
