@@ -46,14 +46,14 @@ For example,
 
   "L1:F1\tL2:F2" -> [{<<"L1">>,<<"F1">>}, {<<"L2">>,<<"F2">>}]
 
-Since that, if multiple same label are in the source, all of these are
-stored in the returned list.
+Since that, if labels are duplicated, all of these are stored in the
+returned list.
 
 ::
 
   "L1:F1\tL1:F2" -> [{<<"L1">>,<<"F1">>}, {<<"L1">>,<<"F2">>}]
 
-Other implementation may return like this.
+Other implementation may store only one like this.
 
 ::
 
