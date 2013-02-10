@@ -97,7 +97,7 @@ Example
   %% convert a LTSV format data to list
   > ltsv:to_list([[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
                   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]]).
-    "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e"
+    [<<"1:a\t2:bb\t3:d:e">>,<<"1:a\t2:bb\t3:d:e">>]
 
   ----------------------------------------------------
   %% get a list of specified key

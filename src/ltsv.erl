@@ -68,8 +68,7 @@ to_binary(Data) ->
 -spec to_list([{binary(), binary()}]) -> list().
 %% @doc convert lists to LTSV format list.
 to_list(Data) ->
-	D = lists:map(fun(N) -> to_binary_one(N) end, Data),
-	binary:bin_to_list(join(D, <<$\n>>)).
+	lists:map(fun(N) -> to_binary_one(N) end, Data).
 
 -spec to_binary_one([{binary(), binary()}]) -> binary().
 %% @doc convert one list to LTSV format binary.

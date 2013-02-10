@@ -44,7 +44,7 @@ to_binary_test() ->
 to_list_test() ->
 	Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
 		   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
-	Expected = "1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e",
+	Expected = [<<"1:a\t2:bb\t3:d:e">>, <<"1:a\t2:bb\t3:d:e">>],
 	?assertEqual(ltsv:to_list(Src), Expected).
 
 
