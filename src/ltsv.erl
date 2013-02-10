@@ -76,7 +76,8 @@ to_binary_one(Data) ->
 
 
 -spec get_fields(binary() | list(), binary()) -> list().
-%% @doc get a list of value which is specified by the key
+%% @doc get a list of value which is specified by the key.
+%% Note: If labels are duplicated, only first field will be returned.
 get_fields(Data, Key) when is_list(Data) ->
 	F = fun(N) ->
 				{_, Field} = lists:keyfind(Key, 1, N),
