@@ -59,7 +59,7 @@ parse_file(Device, Acc) ->
 %% @doc convert lists to LTSV format binary.
 to_binary(Data) ->
 	D = lists:map(fun(N) -> to_binary_one(N) end, Data),
-	binary:list_to_bin(D).
+	join(D, <<$\n>>).
 
 -spec to_list([{binary(), binary()}]) -> list().
 %% @doc convert lists to LTSV format list.
