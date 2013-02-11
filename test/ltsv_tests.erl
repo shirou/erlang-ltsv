@@ -39,7 +39,8 @@ to_binary_test() ->
 	Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
 		   [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
 	Expected = <<"1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e">>,
-	?assertEqual(Expected, to_binary(Src)).
+	?assertEqual(Expected, to_binary(Src)),
+	?assertEqual(Src, parse(to_binary(Src))).
 
 to_list_test() ->
 	Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
