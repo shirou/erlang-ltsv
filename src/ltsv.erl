@@ -10,7 +10,7 @@
 -module(ltsv).
 
 -export([parse/1, parse_line/1, parse_file/1,
-		 to_binary/1, to_list/1,
+		 to_binary/1, to_binary_one/1, to_list/1,
 		 get_fields/2]).
 
 
