@@ -40,13 +40,24 @@ to_binary_test() ->
            [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
     Expected = <<"1:a\t2:bb\t3:d:e\n1:a\t2:bb\t3:d:e">>,
     ?assertEqual(Expected, to_binary(Src)),
-    ?assertEqual(Src, parse(to_binary(Src))).
+    ?assertEqual(Src, parse(to_binary(Src))),
+
+    Src2 = [#{<<"1">> => <<"a">>, <<"2">> => <<"bb">>, <<"3">> => <<"d:e">>},
+            #{<<"1">> => <<"a">>, <<"2">> => <<"bb">>, <<"3">> => <<"d:e">>}],
+    ?assertEqual(Expected, to_binary(Src2)),
+    ?assertEqual(Src, parse(to_binary(Src2))),
+    ok.
 
 to_list_test() ->
     Src = [[{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
            [{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}]],
     Expected = [<<"1:a\t2:bb\t3:d:e">>, <<"1:a\t2:bb\t3:d:e">>],
-    ?assertEqual(Expected, to_list(Src)).
+    ?assertEqual(Expected, to_list(Src)),
+
+    Src2 = [#{<<"1">> => <<"a">>, <<"2">> => <<"bb">>, <<"3">> => <<"d:e">>},
+            #{<<"1">> => <<"a">>, <<"2">> => <<"bb">>, <<"3">> => <<"d:e">>}],
+    ?assertEqual(Expected, to_list(Src2)),
+    ok.
 
 
 get_fields_test() ->

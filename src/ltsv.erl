@@ -55,19 +55,21 @@ parse_file(Device, Acc) ->
             error(Reason)
     end.
 
--spec to_binary([[{binary(), binary()}]]) -> binary().
+-spec to_binary([#{binary() => binary()} | [{binary(), binary()}]]) -> binary().
 %% @doc convert lists to LTSV format binary.
 to_binary(Data) ->
-    D = lists:map(fun(N) -> to_binary_one(N) end, Data),
+    D = to_list(Data),
     join(D, <<$\n>>).
 
--spec to_list([{binary(), binary()}]) -> list().
+-spec to_list([#{binary() => binary()} | [{binary(), binary()}]]) -> [binary()].
 %% @doc convert lists to LTSV format list.
 to_list(Data) ->
     lists:map(fun(N) -> to_binary_one(N) end, Data).
 
--spec to_binary_one([{binary(), binary()}]) -> binary().
+-spec to_binary_one(#{binary() => binary()} | [{binary(), binary()}]) -> binary().
 %% @doc convert one list to LTSV format binary.
+to_binary_one(Data) when is_map(Data) ->
+    to_binary_one(maps:to_list(Data));
 to_binary_one(Data) ->
     F = fun({Label, Field}) ->
                 <<Label/binary, $:, Field/binary>>
