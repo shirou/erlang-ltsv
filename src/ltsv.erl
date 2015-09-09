@@ -10,17 +10,17 @@
 -module(ltsv).
 
 -export([parse/1, parse_line/1, parse_file/1,
-		 to_binary/1, to_binary_one/1, to_list/1,
-		 get_fields/2]).
+         to_binary/1, to_binary_one/1, to_list/1,
+         get_fields/2]).
 
 
 -spec parse(binary() | string()) -> [[{binary(), binary()}]].
 %% @doc parse LTSV formated lines.
 parse(Source) when is_list(Source) ->
-	parse(list_to_binary(Source));
+    parse(list_to_binary(Source));
 parse(Source) when is_binary(Source) ->
-	lists:map(fun(N) -> parse_line(N) end,
-			  binary:split(Source, <<$\n>>, [global])).
+    lists:map(fun(N) -> parse_line(N) end,
+              binary:split(Source, <<$\n>>, [global])).
 
 -spec parse_line(binary()) -> [{binary(), binary()}].
 %% @doc parse a LTSV formated line.
@@ -38,54 +38,54 @@ parse_line(Line) ->
 -spec parse_file(string()) -> [[{binary(), binary()}]].
 %% @doc parse LTSV formated file.
 parse_file(File) ->
-	case file:open(File, [read, binary, raw]) of
-		{ok, Device} ->
-			parse_file(Device, []);
-		{error, Reason} ->
-			error(Reason)
-	end.
+    case file:open(File, [read, binary, raw]) of
+        {ok, Device} ->
+            parse_file(Device, []);
+        {error, Reason} ->
+            error(Reason)
+    end.
 parse_file(Device, Acc) ->
-	case file:read_line(Device) of
-		eof  ->
-			file:close(Device),
-			lists:reverse(Acc);
-		{ok, Line} ->
-			parse_file(Device, [parse_line(Line)|Acc]);
-		{error, Reason} ->
-			error(Reason)
+    case file:read_line(Device) of
+        eof  ->
+            file:close(Device),
+            lists:reverse(Acc);
+        {ok, Line} ->
+            parse_file(Device, [parse_line(Line)|Acc]);
+        {error, Reason} ->
+            error(Reason)
     end.
 
 -spec to_binary([[{binary(), binary()}]]) -> binary().
 %% @doc convert lists to LTSV format binary.
 to_binary(Data) ->
-	D = lists:map(fun(N) -> to_binary_one(N) end, Data),
-	join(D, <<$\n>>).
+    D = lists:map(fun(N) -> to_binary_one(N) end, Data),
+    join(D, <<$\n>>).
 
 -spec to_list([{binary(), binary()}]) -> list().
 %% @doc convert lists to LTSV format list.
 to_list(Data) ->
-	lists:map(fun(N) -> to_binary_one(N) end, Data).
+    lists:map(fun(N) -> to_binary_one(N) end, Data).
 
 -spec to_binary_one([{binary(), binary()}]) -> binary().
 %% @doc convert one list to LTSV format binary.
 to_binary_one(Data) ->
-	F = fun({Label, Field}) ->
-				<<Label/binary, $:, Field/binary>>
-		end,
-	join(lists:map(F, Data), <<$\t>>).
+    F = fun({Label, Field}) ->
+                <<Label/binary, $:, Field/binary>>
+        end,
+    join(lists:map(F, Data), <<$\t>>).
 
 
 -spec get_fields(binary() | list(), binary()) -> list().
 %% @doc get a list of value which is specified by the key.
 %% Note: If labels are duplicated, only first field will be returned.
 get_fields(Data, Key) when is_list(Data) ->
-	F = fun(N) ->
-				{_, Field} = lists:keyfind(Key, 1, N),
-				Field
-		end,
-	lists:map(F, Data);
+    F = fun(N) ->
+                {_, Field} = lists:keyfind(Key, 1, N),
+                Field
+        end,
+    lists:map(F, Data);
 get_fields(Data, Key) when is_binary(Data) ->
-	get_fields(binary:bin_to_list(Data), Key).
+    get_fields(binary:bin_to_list(Data), Key).
 
 
 %% -------------------------------------------------------------------
@@ -115,14 +115,14 @@ join([First|Rest], JoinWith) ->
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
 rstrip_test() ->
-	%% strip
-	?assertEqual(rstrip(<<"ab\n">>), <<"ab">>),
-	%% no newline
-	?assertEqual(rstrip(<<"ab">>), <<"ab">>),
-	%% keep newline in the middle
-	?assertEqual(rstrip(<<"ab\ncd">>), <<"ab\ncd">>).
+    %% strip
+    ?assertEqual(rstrip(<<"ab\n">>), <<"ab">>),
+    %% no newline
+    ?assertEqual(rstrip(<<"ab">>), <<"ab">>),
+    %% keep newline in the middle
+    ?assertEqual(rstrip(<<"ab\ncd">>), <<"ab\ncd">>).
 
 join_test() ->
-	?assertEqual(join([<<"a">>, <<"b">>], <<$:>>), <<"a:b">>).
+    ?assertEqual(join([<<"a">>, <<"b">>], <<$:>>), <<"a:b">>).
 
 -endif.
