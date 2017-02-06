@@ -1,6 +1,5 @@
 ebin
-.eunit
 doc
-deps
 *~
 *.beam
+_build/*
