@@ -25,7 +25,7 @@ parse_line_test() ->
     ?assertEqual([{<<"a">>,<<"b">>},{<<"c">>,<<"d">>}], parse_line("a:b\tc:d\n")).
 
 parse_file_test() ->
-    T = parse_file("../test/test.tsv"),
+    T = parse_file("test/test.tsv"),
     ?assertEqual([{<<"1">>,<<"a">>},{<<"2">>,<<"bb">>},{<<"3">>,<<"d:e">>}],
                  lists:nth(1, T)),
     ?assertEqual([{<<"11">>,<<"a">>},{<<"12">>,<<"bb">>},{<<"13">>,<<"d:e">>}],
